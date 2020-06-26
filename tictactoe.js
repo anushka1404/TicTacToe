@@ -11,10 +11,16 @@ const winCombos = [
 	[0, 4, 8],
 	[6, 4, 2]
 ]
+var cscore = 0;
+var uscore = 0;
 
 const cells = document.querySelectorAll('.cell');
 startGame();
 
+function update(){
+	document.getElementById('computer_score').innerHTML = cscore;
+	document.getElementById('user_score').innerHTML = uscore;
+}
 function startGame() {
 	document.querySelector(".endgame").style.display = "none";
 	origBoard = Array.from(Array(9).keys());
@@ -53,6 +59,11 @@ function checkWin(board, player) {
 }
 
 function gameOver(gameWon) {
+	if(gameWon.player == huPlayer)
+	  uscore++;
+    else if(gameWon.player == aiPlayer)
+	  cscore++;   
+	update();
 	for (let index of winCombos[gameWon.index]) {
 		document.getElementById(index).style.backgroundColor =
 			gameWon.player == huPlayer ? "blue" : "red";
